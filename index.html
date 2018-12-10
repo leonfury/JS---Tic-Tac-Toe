@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title> Tic Tac Toe </title>
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<link rel="stylesheet" href="bootstrap.css" />
+	<link rel="stylesheet" href="style.css" />
+	
+</head>
+	
+<body>
+	<h1> Tic Tac Toe </h1>
+
+	<span id="playAgainst" class="mb-2"> Play Against : </span>
+	<div id="chooseOpponent" class ="mb-2">
+		<button id="playWithPlayer" class="playWithBtn" type="submit" onclick="playPlayer()"> Player</button>
+		<button id="playWithAI" class="playWithBtn" type="submit" onclick="playAI()"> AI </button>
+	</div>
+	<br/>
+
+
+	<button id="newGame" class="initializationBtn hide mt-2" type="submit" onclick="newGame()"> Brand New Game </button>
+
+	
+	<div id="chooseBoardSize" class="mt-2">
+		<span> Changing Board Size </span>
+		<button id="smallSize" class="boardSizeBtn" type="submit" onclick="smallBoard()"> Small </button>
+		<button id="normalSize" class="boardSizeBtn" type="submit" onclick="normalBoard()"> Normal </button>
+		<button id="bigSize" class="boardSizeBtn" type="submit" onclick="bigBoard()"> Big </button>
+	</div>
+	<br/>
+
+	<div id="initialization">
+		<button id="startGame" class="initializationBtn hide" type="submit" onclick="startGame()"> Start Game </button>
+		<button id="anotherGame" class="initializationBtn hide" type="submit" onclick="anotherRound()"> Another Round </button>
+	</div>
+
+	<div id="displayTurn">
+		<p id="player1Turn" class="hide"> Player 1's turn!! </p>
+		<p id="player2Turn" class="hide"> Player 2's turn!! </p>
+		<p id="roundEnd" class="hide"> <strong>Round has ended!! </strong></p>
+	</div>
+
+	<div id="gameBoard" class="row ml-5 mt-3 hide" style="width: 300px; height: 300px;">
+		<div id="cell1" class="cellHeight col-4 border-top-0 border-left-0"> </div>
+		<div id="cell2" class="cellHeight col-4 border-top-0"> </div>
+		<div id="cell3" class="cellHeight col-4 border-top-0 border-right-0"> </div>
+
+		<div id="cell4" class="cellHeight col-4 border-left-0"> </div>
+		<div id="cell5" class="cellHeight col-4"> </div>
+		<div id="cell6" class="cellHeight col-4 border-right-0"> </div>
+		
+		<div id="cell7" class="cellHeight col-4 border-bottom-0 border-left-0"> </div>
+		<div id="cell8" class="cellHeight col-4 border-bottom-0"> </div>
+		<div id="cell9" class="cellHeight col-4 border-bottom-0 border-right-0"> </div>
+	</div>
+
+	<br/>
+	<p id="player1Lead" class="hide"><strong> Player 1 is leading!! </strong></p>
+	<p id="player2Lead" class="hide"><strong> Player 2 is leading!! </strong></p>
+	<p id="gameTie" class="hide"><strong> The game is a tie!!! </strong></p>
+	
+
+	<div id="scoreBoard">
+	</div>
+
+
+	<script src="javascript.js"> </script>
+</body>
+</html>

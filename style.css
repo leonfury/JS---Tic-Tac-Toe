@@ -1,0 +1,41 @@
+body {
+	padding-left: 16px;
+}
+
+#chooseOpponent {
+	display: inline-block;
+}
+
+.cellHeight {
+	height: 33.33333%;
+	border: 1px solid black;
+	margin: 0 !important;
+}
+
+.player1 {
+	background-color: red;
+}
+
+#player1Turn {
+	color: red;
+}
+
+#player1Lead {
+	color: red;
+}
+
+.player2 {
+	background-color: blue;
+}
+
+#player2Turn {
+	color: blue;
+}
+
+#player2Lead {
+	color: blue;
+}
+
+.hide {
+	display: none;
+}
