@@ -70,13 +70,6 @@ function executePlayerAI () {
 		boardStatus[4] = "X";
 		return null;
 	}
-	//if center cell filled, then fill first cell
-	if (boardStatus[4] == "X" && boardStatus[0] != "X") {
-		gameBoard.children[0].classList.add('player2');
-		player2Status[0] = 2;
-		boardStatus[0] = "X";
-		return null;
-	}
 
 //going for the winning move********************-------------------------------------------------------------------------
 	//check for horizontal
@@ -273,6 +266,14 @@ function executePlayerAI () {
 			boardStatus[6] = "X";
 			return null;
 		}
+
+	//if center cell filled, then fill first cell
+	if (boardStatus[4] == "X" && boardStatus[0] != "X") {
+		gameBoard.children[0].classList.add('player2');
+		player2Status[0] = 2;
+		boardStatus[0] = "X";
+		return null;
+	}
 		
 	//random move
 		let randomMove;
