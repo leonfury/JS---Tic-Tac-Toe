@@ -70,6 +70,14 @@ function executePlayerAI () {
 		boardStatus[4] = "X";
 		return null;
 	}
+	//if center cell filled, then fill first cell
+	if (boardStatus[4] == "X" && boardStatus[0] != "X") {
+		gameBoard.children[0].classList.add('player2');
+		player2Status[0] = 2;
+		boardStatus[0] = "X";
+		return null;
+	}
+
 //going for the winning move********************-------------------------------------------------------------------------
 	//check for horizontal
 	for (let i = 0; i <= 9; i=i+3) { //loop is 0,3,6,9
@@ -266,20 +274,19 @@ function executePlayerAI () {
 			return null;
 		}
 		
-//random move
-	let randomMove;
-	console.log('AI Executed - random move');
-	//getting valid random move
-	//infinite loop
-	do {
-		randomMove = Math.floor ( Math.random() * 9 );
-	} while (boardStatus[randomMove] == "X" && gameState == true);
+	//random move
+		let randomMove;
+		//getting valid random move
+		//infinite loop
+		do {
+			randomMove = Math.floor ( Math.random() * 9 );
+		} while (boardStatus[randomMove] == "X" && gameState == true);
 
-	gameBoard.children[randomMove].classList.add('player2');
-	player2Status[randomMove] = 2;
-	boardStatus[randomMove] = "X";
-	
-	console.log('AI execution end');
+		gameBoard.children[randomMove].classList.add('player2');
+		player2Status[randomMove] = 2;
+		boardStatus[randomMove] = "X";
+		
+		console.log('AI execution end');
 }
 
 
@@ -317,6 +324,7 @@ function executePlayerAI () {
 //2. track user input on board
 	for (let i = 0; i < gameBoard.children.length; i++) {
 		gameBoard.children[i].onclick = function (event) {
+			console.log('round ' + round);
 			if (gameState == true) {
 				//check board status!
 				if (boardStatus[i] == "X") {
@@ -343,7 +351,7 @@ function executePlayerAI () {
 				checkDraw();
 				displayTurnScreen();
 
-				if (activeAI == true && round < 9) {
+				if (activeAI == true && gameState == true) {
 					setTimeout (executePlayerAI, 50);
 					setTimeout (checkAIWin, 70);
 				}
@@ -360,23 +368,24 @@ function executePlayerAI () {
 		//horizontal wins
 			(player1Status[0] == 1) && (player1Status[1] == 1) && (player1Status[2] == 1) ?  player1Win () : 
 			(player1Status[3] == 1) && (player1Status[4] == 1) && (player1Status[5] == 1) ?  player1Win () : 
-			(player1Status[6] == 1) && (player1Status[7] == 1) && (player1Status[8] == 1) ?  player1Win () : null;
+			(player1Status[6] == 1) && (player1Status[7] == 1) && (player1Status[8] == 1) ?  player1Win () : 
+			(player1Status[0] == 1) && (player1Status[4] == 1) && (player1Status[8] == 1) ?  player1Win () : 
+			(player1Status[2] == 1) && (player1Status[4] == 1) && (player1Status[6] == 1) ?  player1Win () :null;
 
 		//vertical and diag wins
 		for (let i = 0; i < player1Status.length; i++) { 
-			(player1Status[i] == 1) && (player1Status[i+3] == 1) && (player1Status[i+6] == 1) ?  player1Win () :
-			(player1Status[i] == 1) && (player1Status[i+4] == 1) && (player1Status[i+8] == 1) ?  player1Win () : 
-			(player1Status[i+2] == 1) && (player1Status[i+4] == 1) && (player1Status[i+6] == 1) ?  player1Win () : null;
+			(player1Status[i] == 1) && (player1Status[i+3] == 1) && (player1Status[i+6] == 1) ?  player1Win () : null; 
 		}
 
 			(player2Status[0] == 2) && (player2Status[1] == 2) && (player2Status[2] == 2) ?  player2Win () : 
 			(player2Status[3] == 2) && (player2Status[4] == 2) && (player2Status[5] == 2) ?  player2Win () : 
-			(player2Status[6] == 2) && (player2Status[7] == 2) && (player2Status[8] == 2) ?  player2Win () : null;
+			(player2Status[6] == 2) && (player2Status[7] == 2) && (player2Status[8] == 2) ?  player2Win () : 
+			(player2Status[0] == 2) && (player2Status[4] == 2) && (player2Status[8] == 2) ?  player2Win () : 
+			(player2Status[2] == 2) && (player2Status[4] == 2) && (player2Status[6] == 2) ?  player2Win () : null;
+
 		for (let i = 0; i < player2Status.length; i++) { 
 			
-			(player2Status[i] == 2) && (player2Status[i+3] == 2) && (player2Status[i+6] == 2) ?  player2Win () : 
-			(player2Status[i] == 2) && (player2Status[i+4] == 2) && (player2Status[i+8] == 2) ?  player2Win () : 
-			(player2Status[i+2] == 2) && (player2Status[i+4] == 2) && (player2Status[i+6] == 2) ?  player2Win () : null;
+			(player2Status[i] == 2) && (player2Status[i+3] == 2) && (player2Status[i+6] == 2) ?  player2Win () : null;
 		}
 	}
 	
