@@ -16,6 +16,7 @@
 	const chooseOpponent = document.getElementById('chooseOpponent');
 	const playWithPlayer = document.getElementById('playWithPlayer');
 	const playWithAI = document.getElementById('playWithAI');
+	const AIWithAI = document.getElementById('AIWithAI');
 
 	let boardStatus = [];
 	let player1Status = [];
@@ -26,6 +27,7 @@
 	let player2Score = 0;
 	let tieScore = 0;
 	let activeAI = false;
+	let dumbAI = false;
 
 //1. drawing tic tac toe board
 	// using HTML
@@ -51,6 +53,7 @@
 		startGameBtn.classList.remove('hide');
 		playWithPlayer.classList.add('hide');
 		playWithAI.classList.add('hide');
+		AIWithAI.classList.add('hide');
 		playAgainst.innerHTML = "Playing Against <em>Human Player</em>";
 	}
 
@@ -58,11 +61,33 @@
 		startGameBtn.classList.remove('hide');
 		playWithPlayer.classList.add('hide');
 		playWithAI.classList.add('hide');
+		AIWithAI.classList.add('hide');
 		playAgainst.innerHTML = "Playing Against <em>AI</em>";
 		activeAI = true;
 	}
 
+	function AIplayAI () {
+		startGameBtn.classList.remove('hide');
+		playWithPlayer.classList.add('hide');
+		playWithAI.classList.add('hide');
+		AIWithAI.classList.add('hide');
+		playAgainst.innerHTML = "<em>Dumb AI</em> playing against <em>Smart AI</em>";
+		activeAI = true;
+		dumbAI = true;
+	}
+
+	function executeDumbAI () {
+		console.log('Dumb AI executed');
+			let randomMove;
+			do {
+				randomMove = Math.floor ( Math.random() * 9 );
+			} while (boardStatus[randomMove] == "X" && gameState);
+
+			return ( player1Input(randomMove) );
+	}
+
 function executePlayerAI () {
+	console.log('Smart AI executed');
 	if (!gameState) return null;
 
 	//check if center cell filled, otherwise fill
@@ -171,6 +196,7 @@ function executePlayerAI () {
 		newGameBtn.classList.remove('hide');
 		anotherGameBtn.classList.remove('hide');
 		gameState = true;
+		if (dumbAI) beginAIWar();
 		displayTurnScreen();
 	}
 
@@ -194,6 +220,48 @@ function executePlayerAI () {
 			roundEnd.classList.add('hide');
 		}
 	}
+
+	function AIWarSteps() {
+		console.log('AIWarSteps Executed');
+
+		let i = 500;
+		setTimeout ( () => {
+			if (gameState) executeDumbAI();
+			setTimeout( () => {
+				if (gameState) checkAIWin();
+				setTimeout ( () => {
+					if (gameState) executePlayerAI();
+					setTimeout ( () => {
+						if (gameState) checkAIWin();
+					},i);
+				},i);
+			}, i);
+		},i);
+	}
+
+
+function beginAIWar () { 
+	console.log('beginAIWar executed');
+	let i = 2500;
+	setTimeout ( () => {
+		if (gameState) AIWarSteps();
+		setTimeout(() => {
+			if (gameState) AIWarSteps();
+			setTimeout ( () => {
+				if (gameState) AIWarSteps();
+				setTimeout ( () => {
+					if (gameState) AIWarSteps();
+					setTimeout ( () => {
+						if (gameState) AIWarSteps();
+					},i);
+				},i);
+			},i);		
+		}, i);
+	}, 500); //first loop
+
+
+}
+
 
 //2. track user input on board
 	for (let i = 0; i < gameBoard.children.length; i++) {
@@ -251,7 +319,7 @@ function executePlayerAI () {
 		gameState = false;
 		player1Score++;
 		updateScore();
-		console.log('game end');
+		console.log('game end--------------');
 	}
 
 	function player2Win () {
@@ -259,7 +327,7 @@ function executePlayerAI () {
 		gameState = false;
 		player2Score++;
 		updateScore();
-		console.log('game end');
+		console.log('game end--------------');
 	}
 
 	function checkAIWin() {
@@ -287,7 +355,7 @@ function executePlayerAI () {
 			window.alert('Tie Game!!');
 			gameState = false;
 			updateScore();
-			console.log('game end');
+			console.log('game end--------------');
 		}
 	}
 
@@ -331,6 +399,7 @@ function executePlayerAI () {
 			gameBoard.children[i].classList.remove('player1');
 			gameBoard.children[i].classList.remove('player2');
 		}
+		if (dumbAI) beginAIWar();
 		displayTurnScreen();
 	}
 
@@ -343,6 +412,7 @@ function executePlayerAI () {
 		player2Score = 0;
 		tieScore = 0;
 		activeAI = false;
+		dumbAI = false;
 		gameBoard.classList.add('hide');
 		startGameBtn.classList.add('hide');
 		newGameBtn.classList.add('hide');
@@ -350,6 +420,7 @@ function executePlayerAI () {
 		playAgainst.innerHTML = "Play Against : ";
 		playWithPlayer.classList.remove('hide');
 		playWithAI.classList.remove('hide');
+		AIWithAI.classList.remove('hide');
 		player1Lead.classList.add('hide');
 		player2Lead.classList.add('hide');
 		gameTie.classList.add('hide');
