@@ -73,159 +73,73 @@ function executePlayerAI () {
 	//going for the winning move********************-------------------------------------------------------------------------
 		//check for horizontal
 		for (let i = 0; i <= 9; i=i+3) { //loop is 0,3,6,9
-			//check for missing center
-			if ( player2Status[i] && boardStatus[i+1] != "X" && player2Status [i+2] ) {
-				return ( player2Input(i+1) );
-			}
-
-			//missing left
-			if ( boardStatus[i] != "X" && player2Status[i+1] && player2Status [i+2] ) {
-				return ( player2Input(i) );
-			}
-
-			//missing right
-			if ( player2Status[i] && player2Status [i+1] && boardStatus[i+2] != "X" ) {
-				return ( player2Input(i+2) );
-			}
+			if ( player2Status[i] && boardStatus[i+1] != "X" && player2Status [i+2] ) return ( player2Input(i+1) );
+			if ( boardStatus[i] != "X" && player2Status[i+1] && player2Status [i+2] ) return ( player2Input(i) );
+			if ( player2Status[i] && player2Status [i+1] && boardStatus[i+2] != "X" ) return ( player2Input(i+2) );
 		}
+
 		//check for vertical
 		for (let i = 0; i < 3; i++) { //loop is 0,3,6,9
-			//check for missing center
-			if ( player2Status[i] && boardStatus[i+3] != "X" && player2Status [i+6] ) {
-				return ( player2Input(i+3) );
-			}
-
-			//missing top
-			if ( boardStatus[i] != "X" && player2Status[i+3] && player2Status [i+6] ) {
-				return ( player2Input(i) );
-			}
-
-			//missing bottom
-			if ( player2Status[i] && player2Status [i+3] && boardStatus[i+6] != "X" ) {
-				return ( player2Input(i+6) );
-			}
+			if ( player2Status[i] && boardStatus[i+3] != "X" && player2Status [i+6] ) return ( player2Input(i+3) );
+			if ( boardStatus[i] != "X" && player2Status[i+3] && player2Status [i+6] ) return ( player2Input(i) );
+			if ( player2Status[i] && player2Status [i+3] && boardStatus[i+6] != "X" ) return ( player2Input(i+6) );
 		}
 
 		// check for diag 0 4 8
-			if ( player2Status[0] && boardStatus[4] != "X" && player2Status [8] ) {
-				return ( player2Input(4) );
-			}
-			//missing top
-			if ( boardStatus[0] != "X" && player2Status[4] && player2Status [8] ) {
-				return ( player2Input(0) );
-			}
-			//missing bottom
-			if ( player2Status[0] && player2Status[4] && boardStatus[8] != "X" ) {
-				return ( player2Input(8) );
-			}
+			if ( player2Status[0] && boardStatus[4] != "X" && player2Status [8] ) return ( player2Input(4) );
+			if ( boardStatus[0] != "X" && player2Status[4] && player2Status [8] ) return ( player2Input(0) );
+			if ( player2Status[0] && player2Status[4] && boardStatus[8] != "X" ) return ( player2Input(8) );
 
 		// check for diag 2 4 6
-			if ( player2Status[2] && boardStatus[4] != "X" && player2Status [6] ) {
-				return ( player2Input(4) );
-			}
-			//missing top
-			if ( boardStatus[2] != "X" && player2Status[4] && player2Status [6] ) {
-				return ( player2Input(2) );
-			}
-			//missing bottom
-			if ( player2Status[2] && player2Status[4] && boardStatus[6] != "X" ) {
-				return ( player2Input(6) );
-			}
+			if ( player2Status[2] && boardStatus[4] != "X" && player2Status [6] ) return ( player2Input(4) );
+			if ( boardStatus[2] != "X" && player2Status[4] && player2Status [6] ) return ( player2Input(2) );
+			if ( player2Status[2] && player2Status[4] && boardStatus[6] != "X" ) return ( player2Input(6) );
 
 	//block opponent from winning********************--------------------------------------------------------------------------------------
 		//check for horizontal
 		for (let i = 0; i <= 9; i=i+3) { //loop is 0,3,6,9
-			//check for missing center
-			if ( player1Status[i] && boardStatus[i+1] != "X" && player1Status [i+2] ) {
-				return ( player2Input(i+1) );
-			}
-
-			//missing left
-			if ( boardStatus[i] != "X" && player1Status[i+1] && player1Status [i+2] ) {
-				return ( player2Input(i) );
-			}
-
-			//missing right
-			if ( player1Status[i] && player1Status[i+1] && boardStatus[i+2] != "X" ) {
-				return ( player2Input(i+2) );
-			}
+			if ( player1Status[i] && boardStatus[i+1] != "X" && player1Status [i+2] ) return ( player2Input(i+1) );
+			if ( boardStatus[i] != "X" && player1Status[i+1] && player1Status [i+2] ) return ( player2Input(i) );
+			if ( player1Status[i] && player1Status[i+1] && boardStatus[i+2] != "X" ) return ( player2Input(i+2) );
 		}
+
 		//check for vertical
 		for (let i = 0; i < 3; i++) { //loop is 0,3,6,9
-			//check for missing center
-			if ( player1Status[i] && boardStatus[i+3] != "X" && player1Status [i+6] ) {
-				return ( player2Input(i+3) );
-			}
-
-			//missing top
-			if ( boardStatus[i] != "X" && player1Status[i+3] && player1Status [i+6] ) {
-				return ( player2Input(i) );
-			}
-
-			//missing bottom
-			if ( player1Status[i] && player1Status[i+3] && boardStatus[i+6] != "X" ) {
-				return ( player2Input(i+6) );
-			}
+			if ( player1Status[i] && boardStatus[i+3] != "X" && player1Status [i+6] ) return ( player2Input(i+3) );
+			if ( boardStatus[i] != "X" && player1Status[i+3] && player1Status [i+6] ) return ( player2Input(i) );
+			if ( player1Status[i] && player1Status[i+3] && boardStatus[i+6] != "X" ) return ( player2Input(i+6) );
 		}
 
 		// check for diag 0 4 8
-			if ( player1Status[0] && boardStatus[4] != "X" && player1Status[8] ) {
-				return ( player2Input(4) );
-			}
-			//missing top
-			if ( boardStatus[0] != "X" && player1Status[4] && player1Status[8] ) {
-				return ( player2Input(0) );
-			}
-			//missing bottom
-			if ( player1Status[0] && player1Status[4] && boardStatus[8] != "X" ) {
-				return ( player2Input(8) );
-			}
+			if ( player1Status[0] && boardStatus[4] != "X" && player1Status[8] ) return ( player2Input(4) );
+			if ( boardStatus[0] != "X" && player1Status[4] && player1Status[8] ) return ( player2Input(0) );
+			if ( player1Status[0] && player1Status[4] && boardStatus[8] != "X" ) return ( player2Input(8) );
 
 		// check for diag 2 4 6
-			if ( player1Status[2] && boardStatus[4] != "X" && player1Status[6] ) {
-				return ( player2Input(4) );
-			}
-			//missing top
-			if ( boardStatus[2] != "X" && player1Status[4] && player1Status[6] ) {
-				return ( player2Input(2) );
-			}
-			//missing bottom
-			if ( player1Status[2] && player1Status[4] && boardStatus[6] != "X" ) {
-				return ( player2Input(6) );
-			}
-
+			if ( player1Status[2] && boardStatus[4] != "X" && player1Status[6] ) return ( player2Input(4) );
+			if ( boardStatus[2] != "X" && player1Status[4] && player1Status[6] ) return ( player2Input(2) );
+			if ( player1Status[2] && player1Status[4] && boardStatus[6] != "X" ) return ( player2Input(6) );
 	
 	//block opponent from winning via bottom invert L move
-		if (boardStatus[8] != "X" && player1Status[5] && player1Status[7]) {
-			console.log('exe');
-			return ( player2Input(8) );
-		}
+		if (boardStatus[8] != "X" && player1Status[5] && player1Status[7]) return ( player2Input(8) );
 
 	//block opponent from winning via diag moves
-		if ( boardStatus[1] != "X" && player1Status[0] && player1Status[8] ||  boardStatus[1] != "X" && player1Status[2]  && player1Status[6] || boardStatus[1] != "X" && player1Status[0] && player1Status[5] ||  boardStatus[1] != "X" && player1Status[5] && player1Status[6]){
-			return ( player2Input(1) );
-		}
+		if ( boardStatus[1] != "X" && player1Status[0] && player1Status[8] 
+			||  boardStatus[1] != "X" && player1Status[2]  && player1Status[6] 
+			|| boardStatus[1] != "X" && player1Status[0] && player1Status[5] 
+			||  boardStatus[1] != "X" && player1Status[5] && player1Status[6]) return ( player2Input(1) );
 
 	//block opponent from winning via cell 2,7
-		if ( boardStatus[1] != "X" && player1Status[2] && player1Status[7] && boardStatus[8] != "X" ){
-			console.log('exe');
-			return ( player2Input(8) );
-		}
+		if ( boardStatus[1] != "X" && player1Status[2] && player1Status[7] && boardStatus[8] != "X" ) return ( player2Input(8) );
 
 	//block opponent from winning via bottom tirangle move 0
-		if ( boardStatus[0] != "X" )  {
-			return ( player2Input(0) );
-		}
+		if ( boardStatus[0] != "X" )  return ( player2Input(0) );
 
 	//block opponent from winning via tirangle move 2
-		if ( boardStatus[6] != "X" )  {
-			return ( player2Input(6) );
-		}
+		if ( boardStatus[6] != "X" )  return ( player2Input(6) );
 
 	//block opponent from winning via bottom tirangle move 1
-		if ( boardStatus[2] != "X" )  {
-			return ( player2Input(2) );
-		}
+		if ( boardStatus[2] != "X" )  return ( player2Input(2) );
 			
 	//random move
 		let randomMove;
