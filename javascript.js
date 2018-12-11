@@ -63,233 +63,194 @@
 	}
 
 function executePlayerAI () {
+	if (!gameState) return null;
+
 	//check if center cell filled, otherwise fill
-	if (boardStatus[4] != "X") {
-		gameBoard.children[4].classList.add('player2');
-		player2Status[4] = 2;
-		boardStatus[4] = "X";
-		return null;
-	}
-
-//going for the winning move********************-------------------------------------------------------------------------
-	//check for horizontal
-	for (let i = 0; i <= 9; i=i+3) { //loop is 0,3,6,9
-		//check for missing center
-		if ( player2Status[i] == 2 && boardStatus[i+1] != "X" && player2Status [i+2] == 2 ) {
-			gameBoard.children[i+1].classList.add('player2');
-			player2Status[i+1] = 2;
-			boardStatus[i+1] = "X";
-			return null;
+		if (boardStatus[4] != "X") {
+			return ( player2Input(4) );
 		}
 
-		//missing left
-		if ( boardStatus[i] != "X" && player2Status[i+1] == 2 && player2Status [i+2] == 2 ) {
-			gameBoard.children[i].classList.add('player2');
-			player2Status[i] = 2;
-			boardStatus[i] = "X";
-			return null;
+	//going for the winning move********************-------------------------------------------------------------------------
+		//check for horizontal
+		for (let i = 0; i <= 9; i=i+3) { //loop is 0,3,6,9
+			//check for missing center
+			if ( player2Status[i] && boardStatus[i+1] != "X" && player2Status [i+2] ) {
+				return ( player2Input(i+1) );
+			}
+
+			//missing left
+			if ( boardStatus[i] != "X" && player2Status[i+1] && player2Status [i+2] ) {
+				return ( player2Input(i) );
+			}
+
+			//missing right
+			if ( player2Status[i] && player2Status [i+1] && boardStatus[i+2] != "X" ) {
+				return ( player2Input(i+2) );
+			}
+		}
+		//check for vertical
+		for (let i = 0; i < 3; i++) { //loop is 0,3,6,9
+			//check for missing center
+			if ( player2Status[i] && boardStatus[i+3] != "X" && player2Status [i+6] ) {
+				return ( player2Input(i+3) );
+			}
+
+			//missing top
+			if ( boardStatus[i] != "X" && player2Status[i+3] && player2Status [i+6] ) {
+				return ( player2Input(i) );
+			}
+
+			//missing bottom
+			if ( player2Status[i] && player2Status [i+3] && boardStatus[i+6] != "X" ) {
+				return ( player2Input(i+6) );
+			}
 		}
 
-		//missing right
-		if ( player2Status[i] == 2 && player2Status [i+1] == 2 && boardStatus[i+2] != "X" ) {
-			gameBoard.children[i+2].classList.add('player2');
-			player2Status[i+2] = 2;
-			boardStatus[i+2] = "X";
-			return null;
+		// check for diag 0 4 8
+			if ( player2Status[0] && boardStatus[4] != "X" && player2Status [8] ) {
+				return ( player2Input(4) );
+			}
+			//missing top
+			if ( boardStatus[0] != "X" && player2Status[4] && player2Status [8] ) {
+				return ( player2Input(0) );
+			}
+			//missing bottom
+			if ( player2Status[0] && player2Status[4] && boardStatus[8] != "X" ) {
+				return ( player2Input(8) );
+			}
+
+		// check for diag 2 4 6
+			if ( player2Status[2] && boardStatus[4] != "X" && player2Status [6] ) {
+				return ( player2Input(4) );
+			}
+			//missing top
+			if ( boardStatus[2] != "X" && player2Status[4] && player2Status [6] ) {
+				return ( player2Input(2) );
+			}
+			//missing bottom
+			if ( player2Status[2] && player2Status[4] && boardStatus[6] != "X" ) {
+				return ( player2Input(6) );
+			}
+
+	//block opponent from winning********************--------------------------------------------------------------------------------------
+		//check for horizontal
+		for (let i = 0; i <= 9; i=i+3) { //loop is 0,3,6,9
+			//check for missing center
+			if ( player1Status[i] && boardStatus[i+1] != "X" && player1Status [i+2] ) {
+				return ( player2Input(i+1) );
+			}
+
+			//missing left
+			if ( boardStatus[i] != "X" && player1Status[i+1] && player1Status [i+2] ) {
+				return ( player2Input(i) );
+			}
+
+			//missing right
+			if ( player1Status[i] && player1Status[i+1] && boardStatus[i+2] != "X" ) {
+				return ( player2Input(i+2) );
+			}
 		}
-	}
-	//check for vertical
-	for (let i = 0; i < 3; i++) { //loop is 0,3,6,9
-		//check for missing center
-		if ( player2Status[i] == 2 && boardStatus[i+3] != "X" && player2Status [i+6] == 2 ) {
-			gameBoard.children[i+3].classList.add('player2');
-			player2Status[i+3] = 2;
-			boardStatus[i+3] = "X";
-			return null;
+		//check for vertical
+		for (let i = 0; i < 3; i++) { //loop is 0,3,6,9
+			//check for missing center
+			if ( player1Status[i] && boardStatus[i+3] != "X" && player1Status [i+6] ) {
+				return ( player2Input(i+3) );
+			}
+
+			//missing top
+			if ( boardStatus[i] != "X" && player1Status[i+3] && player1Status [i+6] ) {
+				return ( player2Input(i) );
+			}
+
+			//missing bottom
+			if ( player1Status[i] && player1Status[i+3] && boardStatus[i+6] != "X" ) {
+				return ( player2Input(i+6) );
+			}
 		}
 
-		//missing top
-		if ( boardStatus[i] != "X" && player2Status[i+3] == 2 && player2Status [i+6] == 2 ) {
-			gameBoard.children[i].classList.add('player2');
-			player2Status[i] = 2;
-			boardStatus[i] = "X";
-			return null;
+		// check for diag 0 4 8
+			if ( player1Status[0] && boardStatus[4] != "X" && player1Status[8] ) {
+				return ( player2Input(4) );
+			}
+			//missing top
+			if ( boardStatus[0] != "X" && player1Status[4] && player1Status[8] ) {
+				return ( player2Input(0) );
+			}
+			//missing bottom
+			if ( player1Status[0] && player1Status[4] && boardStatus[8] != "X" ) {
+				return ( player2Input(8) );
+			}
+
+		// check for diag 2 4 6
+			if ( player1Status[2] && boardStatus[4] != "X" && player1Status[6] ) {
+				return ( player2Input(4) );
+			}
+			//missing top
+			if ( boardStatus[2] != "X" && player1Status[4] && player1Status[6] ) {
+				return ( player2Input(2) );
+			}
+			//missing bottom
+			if ( player1Status[2] && player1Status[4] && boardStatus[6] != "X" ) {
+				return ( player2Input(6) );
+			}
+
+	
+	//block opponent from winning via bottom invert L move
+		if (boardStatus[8] != "X" && player1Status[5] && player1Status[7]) {
+			console.log('exe');
+			return ( player2Input(8) );
 		}
 
-		//missing bottom
-		if ( player2Status[i] == 2 && player2Status [i+3] == 2 && boardStatus[i+6] != "X" ) {
-			gameBoard.children[i+6].classList.add('player2');
-			player2Status[i+6] = 2;
-			boardStatus[i+6] = "X";
-			return null;
-		}
-	}
-
-	// check for diag 0 4 8
-		if ( player2Status[0] == 2 && boardStatus[4] != "X" && player2Status [8] == 2 ) {
-			gameBoard.children[4].classList.add('player2');
-			player2Status[4] = 2;
-			boardStatus[4] = "X";
-			return null;
-		}
-		//missing top
-		if ( boardStatus[0] != "X" && player2Status[4] == 2 && player2Status [8] == 2 ) {
-			gameBoard.children[0].classList.add('player2');
-			player2Status[0] = 2;
-			boardStatus[0] = "X";
-			return null;
-		}
-		//missing bottom
-		if ( player2Status[0] == 2 && player2Status [4] == 2 && boardStatus[8] != "X" ) {
-			gameBoard.children[8].classList.add('player2');
-			player2Status[8] = 2;
-			boardStatus[8] = "X";
-			return null;
+	//block opponent from winning via diag moves
+		if ( boardStatus[1] != "X" && player1Status[0] && player1Status[8] ||  boardStatus[1] != "X" && player1Status[2]  && player1Status[6] || boardStatus[1] != "X" && player1Status[0] && player1Status[5] ||  boardStatus[1] != "X" && player1Status[5] && player1Status[6]){
+			return ( player2Input(1) );
 		}
 
-	// check for diag 2 4 6
-		if ( player2Status[2] == 2 && boardStatus[4] != "X" && player2Status [6] == 2 ) {
-			gameBoard.children[4].classList.add('player2');
-			player2Status[4] = 2;
-			boardStatus[4] = "X";
-			return null;
-		}
-		//missing top
-		if ( boardStatus[2] != "X" && player2Status[4] == 2 && player2Status [6] == 2 ) {
-			gameBoard.children[2].classList.add('player2');
-			player2Status[2] = 2;
-			boardStatus[2] = "X";
-			return null;
-		}
-		//missing bottom
-		if ( player2Status[2] == 2 && player2Status [4] == 2 && boardStatus[6] != "X" ) {
-			gameBoard.children[6].classList.add('player2');
-			player2Status[6] = 2;
-			boardStatus[6] = "X";
-			return null;
+	//block opponent from winning via cell 2,7
+		if ( boardStatus[1] != "X" && player1Status[2] && player1Status[7] && boardStatus[8] != "X" ){
+			console.log('exe');
+			return ( player2Input(8) );
 		}
 
-//block opponent from winning********************--------------------------------------------------------------------------------------
-	//check for horizontal
-	for (let i = 0; i <= 9; i=i+3) { //loop is 0,3,6,9
-		//check for missing center
-		if ( player1Status[i] == 1 && boardStatus[i+1] != "X" && player1Status [i+2] == 1 ) {
-			gameBoard.children[i+1].classList.add('player2');
-			player2Status[i+1] = 2;
-			boardStatus[i+1] = "X";
-			return null;
+	//block opponent from winning via bottom tirangle move 0
+		if ( boardStatus[0] != "X" )  {
+			return ( player2Input(0) );
 		}
 
-		//missing left
-		if ( boardStatus[i] != "X" && player1Status[i+1] == 1 && player1Status [i+2] == 1 ) {
-			gameBoard.children[i].classList.add('player2');
-			player2Status[i] = 2;
-			boardStatus[i] = "X";
-			return null;
+	//block opponent from winning via tirangle move 2
+		if ( boardStatus[6] != "X" )  {
+			return ( player2Input(6) );
 		}
 
-		//missing right
-		if ( player1Status[i] == 1 && player1Status [i+1] == 1 && boardStatus[i+2] != "X" ) {
-			gameBoard.children[i+2].classList.add('player2');
-			player2Status[i+2] = 2;
-			boardStatus[i+2] = "X";
-			return null;
+	//block opponent from winning via bottom tirangle move 1
+		if ( boardStatus[2] != "X" )  {
+			return ( player2Input(2) );
 		}
-	}
-	//check for vertical
-	for (let i = 0; i < 3; i++) { //loop is 0,3,6,9
-		//check for missing center
-		if ( player1Status[i] == 1 && boardStatus[i+3] != "X" && player1Status [i+6] == 1 ) {
-			gameBoard.children[i+3].classList.add('player2');
-			player2Status[i+3] = 2;
-			boardStatus[i+3] = "X";
-			return null;
-		}
-
-		//missing top
-		if ( boardStatus[i] != "X" && player1Status[i+3] == 1 && player1Status [i+6] == 1 ) {
-			gameBoard.children[i].classList.add('player2');
-			player2Status[i] = 2;
-			boardStatus[i] = "X";
-			return null;
-		}
-
-		//missing bottom
-		if ( player1Status[i] == 1 && player1Status [i+3] == 1 && boardStatus[i+6] != "X" ) {
-			gameBoard.children[i+6].classList.add('player2');
-			player2Status[i+6] = 2;
-			boardStatus[i+6] = "X";
-			return null;
-		}
-	}
-
-	// check for diag 0 4 8
-		if ( player1Status[0] == 1 && boardStatus[4] != "X" && player1Status [8] == 1 ) {
-			gameBoard.children[4].classList.add('player2');
-			player2Status[4] = 2;
-			boardStatus[4] = "X";
-			return null;
-		}
-		//missing top
-		if ( boardStatus[0] != "X" && player1Status[4] == 1 && player1Status [8] == 1 ) {
-			gameBoard.children[0].classList.add('player2');
-			player2Status[0] = 2;
-			boardStatus[0] = "X";
-			return null;
-		}
-		//missing bottom
-		if ( player1Status[0] == 1 && player1Status [4] == 1 && boardStatus[8] != "X" ) {
-			gameBoard.children[8].classList.add('player2');
-			player2Status[8] = 2;
-			boardStatus[8] = "X";
-			return null;
-		}
-
-	// check for diag 2 4 6
-		if ( player1Status[2] == 1 && boardStatus[4] != "X" && player1Status [6] == 1 ) {
-			gameBoard.children[4].classList.add('player2');
-			player2Status[4] = 2;
-			boardStatus[4] = "X";
-			return null;
-		}
-		//missing top
-		if ( boardStatus[2] != "X" && player1Status[4] == 1 && player1Status [6] == 1 ) {
-			gameBoard.children[2].classList.add('player2');
-			player2Status[2] = 2;
-			boardStatus[2] = "X";
-			return null;
-		}
-		//missing bottom
-		if ( player1Status[2] == 1 && player1Status [4] == 1 && boardStatus[6] != "X" ) {
-			gameBoard.children[6].classList.add('player2');
-			player2Status[6] = 2;
-			boardStatus[6] = "X";
-			return null;
-		}
-
-	//if center cell filled, then fill first cell
-	if (boardStatus[4] == "X" && boardStatus[0] != "X") {
-		gameBoard.children[0].classList.add('player2');
-		player2Status[0] = 2;
-		boardStatus[0] = "X";
-		return null;
-	}
-		
+			
 	//random move
 		let randomMove;
 		//getting valid random move
 		//infinite loop
 		do {
 			randomMove = Math.floor ( Math.random() * 9 );
-		} while (boardStatus[randomMove] == "X" && gameState == true);
+		} while (boardStatus[randomMove] == "X" && gameState);
 
-		gameBoard.children[randomMove].classList.add('player2');
-		player2Status[randomMove] = 2;
-		boardStatus[randomMove] = "X";
-		
-		console.log('AI execution end');
-}
+		return ( player2Input(randomMove) );
+	}
 
+//player inputs
+	function player1Input (i) {
+		gameBoard.children[i].classList.add('player1');
+		player1Status[i] = 1;
+		boardStatus[i] = "X"; 
+	}
+
+	function player2Input (i) {
+		gameBoard.children[i].classList.add('player2');
+		player2Status[i] = 1;
+		boardStatus[i] = "X"; 
+		return null;
+	}
 
 //1c. start game
 	function startGame () {
@@ -326,33 +287,25 @@ function executePlayerAI () {
 	for (let i = 0; i < gameBoard.children.length; i++) {
 		gameBoard.children[i].onclick = function (event) {
 			console.log('round ' + round);
-			if (gameState == true) {
+			if (gameState) {
 				//check board status!
-				if (boardStatus[i] == "X") {
+				if (boardStatus[i]) {
 					window.alert('That cell is occupied! Choose another cell');
 					return;
 				}
 				//check player turn then update player status
-				if (round % 2 == 1) {
-					gameBoard.children[i].classList.add('player1');
-					player1Status[i] = 1;
-				}
+				if (round % 2 == 1) player1Input(i);
 
-				if (round % 2 == 0) {
-					gameBoard.children[i].classList.add('player2');
-					player2Status[i] = 2;
-				}
-				//update board status
-				boardStatus[i] = "X"; 
+				if (round % 2 == 0 && !activeAI) player2Input(i);
 				round++; //round increment
 
 				//check for win condition
-				checkWin();
+				setTimeout (checkWin, 10);
 				//check for tie condition
-				checkDraw();
-				displayTurnScreen();
+				setTimeout (checkDraw, 10);
+				setTimeout(displayTurnScreen, 15);
 
-				if (activeAI == true && gameState == true) {
+				if (activeAI && gameState) {
 					setTimeout (executePlayerAI, 50);
 					setTimeout (checkAIWin, 70);
 				}
@@ -360,33 +313,31 @@ function executePlayerAI () {
 			else {
 				window.alert('Game has ended');
 			}
-			console.log(`player 1 ` + player1Status);
-			console.log(`player 2 ` + player2Status);
 		}
 	}
 
 	function checkWin () {
 		//horizontal wins
-			(player1Status[0] == 1) && (player1Status[1] == 1) && (player1Status[2] == 1) ?  player1Win () : 
-			(player1Status[3] == 1) && (player1Status[4] == 1) && (player1Status[5] == 1) ?  player1Win () : 
-			(player1Status[6] == 1) && (player1Status[7] == 1) && (player1Status[8] == 1) ?  player1Win () : 
-			(player1Status[0] == 1) && (player1Status[4] == 1) && (player1Status[8] == 1) ?  player1Win () : 
-			(player1Status[2] == 1) && (player1Status[4] == 1) && (player1Status[6] == 1) ?  player1Win () :null;
+			( player1Status[0] && player1Status[1] && player1Status[2] ) ?  player1Win () : 
+			( player1Status[3] && player1Status[4] && player1Status[5] ) ?  player1Win () : 
+			( player1Status[6] && player1Status[7] && player1Status[8] ) ?  player1Win () : 
+			( player1Status[0] && player1Status[4] && player1Status[8] ) ?  player1Win () : 
+			( player1Status[2] && player1Status[4] && player1Status[6] ) ?  player1Win () : null;
 
 		//vertical and diag wins
 		for (let i = 0; i < player1Status.length; i++) { 
-			(player1Status[i] == 1) && (player1Status[i+3] == 1) && (player1Status[i+6] == 1) ?  player1Win () : null; 
+			( player1Status[i] && player1Status[i+3] && player1Status[i+6] ) ?  player1Win () : null; 
 		}
 
-			(player2Status[0] == 2) && (player2Status[1] == 2) && (player2Status[2] == 2) ?  player2Win () : 
-			(player2Status[3] == 2) && (player2Status[4] == 2) && (player2Status[5] == 2) ?  player2Win () : 
-			(player2Status[6] == 2) && (player2Status[7] == 2) && (player2Status[8] == 2) ?  player2Win () : 
-			(player2Status[0] == 2) && (player2Status[4] == 2) && (player2Status[8] == 2) ?  player2Win () : 
-			(player2Status[2] == 2) && (player2Status[4] == 2) && (player2Status[6] == 2) ?  player2Win () : null;
+			( player2Status[0] && player2Status[1] && player2Status[2] ) ?  player2Win () : 
+			( player2Status[3] && player2Status[4] && player2Status[5] ) ?  player2Win () : 
+			( player2Status[6] && player2Status[7] && player2Status[8] ) ?  player2Win () : 
+			( player2Status[0] && player2Status[4] && player2Status[8] ) ?  player2Win () : 
+			( player2Status[2] && player2Status[4] && player2Status[6] ) ?  player2Win () : null;
 
 		for (let i = 0; i < player2Status.length; i++) { 
 			
-			(player2Status[i] == 2) && (player2Status[i+3] == 2) && (player2Status[i+6] == 2) ?  player2Win () : null;
+			( player2Status[i] && player2Status[i+3] && player2Status[i+6] ) ?  player2Win () : null;
 		}
 	}
 	
@@ -414,7 +365,7 @@ function executePlayerAI () {
 	}
 
 	function checkDraw () {
-		if (gameState == false) return null;
+		if (!gameState) return null;
 
 		if (boardStatus.length == 9) {
 			//if board status. length is 9 then check whether fully filled
