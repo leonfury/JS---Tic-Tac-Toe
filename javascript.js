@@ -317,28 +317,21 @@ function executePlayerAI () {
 	}
 
 	function checkWin () {
-		//horizontal wins
-			( player1Status[0] && player1Status[1] && player1Status[2] ) ?  player1Win () : 
-			( player1Status[3] && player1Status[4] && player1Status[5] ) ?  player1Win () : 
-			( player1Status[6] && player1Status[7] && player1Status[8] ) ?  player1Win () : 
-			( player1Status[0] && player1Status[4] && player1Status[8] ) ?  player1Win () : 
-			( player1Status[2] && player1Status[4] && player1Status[6] ) ?  player1Win () : null;
-
-		//vertical and diag wins
-		for (let i = 0; i < player1Status.length; i++) { 
-			( player1Status[i] && player1Status[i+3] && player1Status[i+6] ) ?  player1Win () : null; 
+		//player 1&2 horizontal wins
+		for (let i = 0; i < boardStatus.length; i=i+3) { 
+			if ( player1Status[i] && player1Status[i+1] && player1Status[i+2] ) player1Win (); 
+			if ( player2Status[i] && player2Status[i+1] && player2Status[i+2] ) player2Win (); 
 		}
-
-			( player2Status[0] && player2Status[1] && player2Status[2] ) ?  player2Win () : 
-			( player2Status[3] && player2Status[4] && player2Status[5] ) ?  player2Win () : 
-			( player2Status[6] && player2Status[7] && player2Status[8] ) ?  player2Win () : 
+		//player 1&2 vertical  wins
+		for (let i = 0; i < boardStatus.length; i++) { 
+			if ( player1Status[i] && player1Status[i+3] && player1Status[i+6] ) player1Win (); 
+			if ( player2Status[i] && player2Status[i+3] && player2Status[i+6] ) player2Win ();
+		}
+		//player 1&2 diagonal win
+			( player1Status[0] && player1Status[4] && player1Status[8] ) ?  player1Win () : 
+			( player1Status[2] && player1Status[4] && player1Status[6] ) ?  player1Win () : 
 			( player2Status[0] && player2Status[4] && player2Status[8] ) ?  player2Win () : 
 			( player2Status[2] && player2Status[4] && player2Status[6] ) ?  player2Win () : null;
-
-		for (let i = 0; i < player2Status.length; i++) { 
-			
-			( player2Status[i] && player2Status[i+3] && player2Status[i+6] ) ?  player2Win () : null;
-		}
 	}
 	
 	function player1Win () {
