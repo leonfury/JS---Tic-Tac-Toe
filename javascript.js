@@ -77,17 +77,18 @@
 	}
 
 	function executeDumbAI () {
-		console.log('Dumb AI executed');
+		
 			let randomMove;
 			do {
 				randomMove = Math.floor ( Math.random() * 9 );
 			} while (boardStatus[randomMove] == "X" && gameState);
-
+			console.log('Dumb AI executed at round ' + round + ' at cell ' + randomMove);
 			return ( player1Input(randomMove) );
+
 	}
 
 function executePlayerAI () {
-	console.log('Smart AI executed');
+	console.log('Smart AI executed at round ' + round);
 	if (!gameState) return null;
 
 	//check if center cell filled, otherwise fill
@@ -237,6 +238,7 @@ function executePlayerAI () {
 				},i);
 			}, i);
 		},i);
+		clearTimeout(i);
 	}
 
 
@@ -258,7 +260,7 @@ function beginAIWar () {
 			},i);		
 		}, i);
 	}, 500); //first loop
-
+	clearTimeout(i);
 
 }
 
