@@ -55,6 +55,8 @@
 		playWithAI.classList.add('hide');
 		AIWithAI.classList.add('hide');
 		playAgainst.innerHTML = "Playing Against <em>Human Player</em>";
+		activeAI = false;
+		dumbAI = false;
 	}
 
 	function playAI () {
@@ -64,6 +66,7 @@
 		AIWithAI.classList.add('hide');
 		playAgainst.innerHTML = "Playing Against <em>AI</em>";
 		activeAI = true;
+		dumbAI = false;
 	}
 
 	function AIplayAI () {
