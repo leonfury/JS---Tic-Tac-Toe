@@ -80,6 +80,8 @@
 	}
 
 	function executeDumbAI () {
+		if (!gameState) return null;
+		if (!dumbAI) return null; 
 		
 			let randomMove;
 			do {
@@ -91,9 +93,9 @@
 	}
 
 function executePlayerAI () {
-	console.log('Smart AI executed at round ' + round);
 	if (!gameState) return null;
-
+	if (!activeAI) return null;
+	console.log('Smart AI executed at round ' + round);
 	//check if center cell filled, otherwise fill
 		if (boardStatus[4] != "X") return ( player2Input(4) );
 
@@ -226,6 +228,8 @@ function executePlayerAI () {
 	}
 
 	function AIWarSteps() {
+		
+		if (!dumbAI) return null;
 		console.log('AIWarSteps Executed');
 
 		let i = 500;
@@ -246,6 +250,7 @@ function executePlayerAI () {
 
 
 function beginAIWar () { 
+	if (!dumbAI) return null;
 	console.log('beginAIWar executed');
 	let i = 2500;
 	setTimeout ( () => {
