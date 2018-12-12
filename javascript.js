@@ -407,14 +407,14 @@ function beginAIWar () {
 
 //7. reset game
 	function newGame () {
+		activeAI = false;
+		dumbAI = false;
 		anotherRound();
 		gameState = false;
 		scoreBoard.innerHTML ="";
 		player1Score = 0;
 		player2Score = 0;
 		tieScore = 0;
-		activeAI = false;
-		dumbAI = false;
 		gameBoard.classList.add('hide');
 		startGameBtn.classList.add('hide');
 		newGameBtn.classList.add('hide');
